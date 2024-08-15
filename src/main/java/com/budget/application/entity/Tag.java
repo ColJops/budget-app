@@ -3,7 +3,7 @@ package com.budget.application.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -12,10 +12,8 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Entity
 @Table(name = "tags")
-
 public class Tag {
 
     @Id
@@ -27,4 +25,8 @@ public class Tag {
 
     @ManyToMany(mappedBy = "tags", fetch = FetchType.EAGER)
     private List<Expense> expenses = new ArrayList<Expense>();
+
+    public Tag(String tagName) {
+        this.name = tagName;
+    }
 }

@@ -3,7 +3,8 @@ package com.budget.application.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.security.Timestamp;
+
+import java.sql.Timestamp;
 import java.util.List;
 
 @Getter

@@ -1,6 +1,7 @@
 package com.budget.application.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,8 +13,9 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "expenses")
+//@Table(name = "expenses")
 public class Expense {
 
     @Id
@@ -22,6 +24,7 @@ public class Expense {
 
     private LocalDateTime creationDate;
 
+    @Column()
     private Double value;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
