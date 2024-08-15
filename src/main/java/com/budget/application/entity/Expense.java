@@ -13,9 +13,8 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
-//@Table(name = "expenses")
+@Table(name = "expenses")
 public class Expense {
 
     @Id
@@ -24,15 +23,13 @@ public class Expense {
 
     private LocalDateTime creationDate;
 
-    @Column()
     private Double value;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "expenses_tags",
     joinColumns = { @JoinColumn(name = "expense_id", referencedColumnName = "id",
         nullable = false, unique = false )}, inverseJoinColumns = {
             @JoinColumn(name = "tag_id", referencedColumnName = "id",
-            nullable = false, unique = false )}
-    )
+            nullable = false, unique = false )})
     private List<Tag> tags = new ArrayList<>();
 }
