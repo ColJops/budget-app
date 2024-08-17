@@ -23,6 +23,8 @@ public class Expense {
 
     private LocalDateTime creationDate;
 
+    //Eliminacja błędu Hibernate - nazwa value koliduje z SQL
+    @Column(name = "'VALUE'")
     private Double value;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
