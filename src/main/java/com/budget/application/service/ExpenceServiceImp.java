@@ -17,6 +17,7 @@ public class ExpenceServiceImp implements ExpenseService{
     public Optional<List<Expense>> getExpensesBySearchCriteria(ExpensesSearchCriteria criteria) {
         List<Expense> filteredExpenses = new ArrayList<>();
         List<Expense> allExpenses = expenseRepository.findAll();
+        filteredExpenses = allExpenses;
         if(criteria.getTagNames() != null && !criteria.getTagNames().isEmpty()) {
             filteredExpenses = allExpenses.stream()
                     .filter(expense -> expense.getTags().stream()
