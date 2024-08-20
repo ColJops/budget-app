@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ExpenceServiceImp implements ExpenseService{
@@ -15,28 +16,32 @@ public class ExpenceServiceImp implements ExpenseService{
     private ExpenseRepository expenseRepository;
 
     public Optional<List<Expense>> getExpensesBySearchCriteria(ExpensesSearchCriteria criteria) {
-        List<Expense> filteredExpenses = new ArrayList<>();
+        List<Expense> filteredExpenses = new ArrayList<Expense>();
         List<Expense> allExpenses = expenseRepository.findAll();
         filteredExpenses = allExpenses;
-        if(criteria.getTagNames() != null && !criteria.getTagNames().isEmpty()) {
-            filteredExpenses = allExpenses.stream()
+        if(criteria.getTagNames()!=null) {
+            filteredExpenses = filteredExpenses.stream()
                     .filter(expense -> expense.getTags().stream()
-                            .allMatch(tag -> criteria.getTagNames().contains(tag.getName())))
-                    .toList();
+                            .anyMatch(tag -> criteria.getTagNames().contains(tag.getName())))
+                    .collect(Collectors.toList());
         }
-        if (criteria.getFromDate() != null) {
+
+        if(criteria.getFromDate()!=null) {
             filteredExpenses = filteredExpenses.stream()
                     .filter(expense -> expense.getCreationDate().isAfter(criteria.getFromDate().toLocalDateTime()))
-                    .toList();
+                    .collect(Collectors.toList());
         }
-        if (criteria.getToDate() != null) {
+
+        if(criteria.getToDate()!=null) {
             filteredExpenses = filteredExpenses.stream()
                     .filter(expense -> expense.getCreationDate().isBefore(criteria.getToDate().toLocalDateTime()))
-                    .toList();
+                    .collect(Collectors.toList());
         }
+
 
         return Optional.of(filteredExpenses);
     }
+
 
     public Expense createExpense(Expense expense) {
         return expenseRepository.save(expense);
